@@ -1,0 +1,119 @@
+% !BIB TS-program = biber
+\documentclass[12pt,letterpaper]{article}
+
+% Layout and formatting
+\usepackage[margin=1in]{geometry}
+\usepackage{csquotes}
+\usepackage{fixltx2e}
+\usepackage{mathptmx}
+\usepackage{setspace}
+\usepackage{units}
+\frenchspacing
+
+% Bibliography
+\usepackage[american]{babel}
+\usepackage[backend=biber,style=apa]{biblatex}
+\DeclareLanguageMapping{american}{american-apa}
+\bibliography{bibliography.bib}
+
+% Graphics
+\usepackage{graphicx}
+\usepackage[pdf]{pstricks}
+\psset{unit=1in,linewidth=0.02}
+
+% Figures, tables, and captions
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{caption}
+\captionsetup{labelfont=bf,font=small,labelsep=period}
+\usepackage{subcaption}
+\usepackage[rightcaption]{sidecap}
+
+% Math
+\usepackage{algorithm2e}
+
+\title{BECKY:\\Bayesian Estimation of Coevolutionary KrYteria}
+
+\begin{document}
+
+\begin{titlepage}
+\null
+\vfil
+\let\newpage\relax\maketitle
+\vfil
+\centering
+\includegraphics[width=2.5in]{figures/icon.pdf}
+\vfil
+\end{titlepage}
+
+\newpage
+
+\doublespacing
+
+\section*{Introduction}
+
+Considerable . To date, there are a number of tools available for .
+
+However, problems similar to those of parsimony inference of phylogeny also plague parsimony inference of cophylogenetic mappings.
+
+A likelihood implementation has many advantages \cite{Charleston:2009}.
+
+\section*{Materials and Methods}
+
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.2\textwidth}
+\centering
+\begin{pspicture}(1,1)
+\psline(0,0.5)(0.5,0.5)
+\psline(0.5,0.3)(1,0.3)
+\psline(0.5,0.7)(1,0.7)
+\psline(0.5,0.3)(0.5,0.7)
+\psline[linestyle=dashed](0,0.6)(0.4,0.6)
+\psline[linestyle=dashed](0.4,0.4)(1,0.4)
+\psline[linestyle=dashed](0.4,0.8)(1,0.8)
+\psline[linestyle=dashed](0.4,0.4)(0.4,0.8)
+\end{pspicture}
+\caption{cospeciation}
+\end{subfigure}
+\begin{subfigure}[b]{0.2\textwidth}
+\centering
+\begin{pspicture}(1,1)
+\psline(0,0)(1,0)
+\psline[linestyle=dashed](0,0.1)(1,0.1)
+\psline[linestyle=dashed](0.5,0.1)(0.5,0.3)
+\psline[linestyle=dashed](0.5,0.3)(1,0.3)
+\end{pspicture}
+\caption{duplication}
+\end{subfigure}
+\begin{subfigure}[b]{0.2\textwidth}
+\centering
+\begin{pspicture}(1,1)
+\psline(0,0)(1,0)
+\psline(0,0.4)(1,0.4)
+\psline[linestyle=dashed](0,0.1)(1,0.1)
+\psline[linestyle=dashed](0.5,0.1)(0.5,0.5)
+\psline[linestyle=dashed](0.5,0.5)(1,0.5)\end{pspicture}
+\caption{host-shift}
+\end{subfigure}
+\begin{subfigure}[b]{0.2\textwidth}
+\centering
+\begin{pspicture}(1,1)
+\psline(0,0)(1,0)
+\psline[linestyle=dashed](0,0.1)(0.8,0.1)
+\rput(0.8,0.1){\textsf{X}}
+\end{pspicture}
+\caption{loss}
+\end{subfigure}
+\caption{Diagrams of the four cophylogenetic events considered in my model, which was coined the four-event model by \textcite{Ronquist:2003}, where the host phylogeny and the symbiont dashed. All events are branch events (i.e., they can occur at any point), except cospeciation, which is a nodal event (and thus can occur only when the host speciates).}
+\end{figure}
+
+\section*{Results}
+
+\section*{Discussion}
+
+\section*{Conclusions and Future Work}
+
+\printbibliography
+
+\end{document}
