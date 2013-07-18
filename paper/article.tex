@@ -4,6 +4,7 @@
 
 % Layout and formatting
 \usepackage[margin=1in]{geometry}
+\usepackage{acronym}
 \usepackage{csquotes}
 \usepackage{fixltx2e}
 \usepackage{mathptmx}
@@ -31,11 +32,19 @@
 \usepackage[rightcaption]{sidecap}
 
 % Math
+\usepackage{amsmath}
 \usepackage{algorithm2e}
+\usepackage{mathtools}
 
 \title{BECKY:\\Bayesian Estimation of Coevolutionary KrYteria}
+%\author{Arman Bilge}
 
 \begin{document}
+
+\begin{acronym}
+  \acro{MCMC}{Markov chain Monte Carlo}
+  \acro{GTR}{general time reversible}
+\end{acronym}
 
 \begin{titlepage}
 \null
@@ -62,8 +71,6 @@ It is important to note that the host-symbiont [reconciliation] problem is large
 However, problems similar to those of parsimony inference of phylogeny also plague parsimony inference of cophylogenetic mappings.
 
 A likelihood implementation has many advantages \parencite{Charleston:2009}.
-
-\section*{Materials and Methods}
 
 \begin{figure}
 \centering
@@ -98,7 +105,8 @@ A likelihood implementation has many advantages \parencite{Charleston:2009}.
 \psline(0,0.4)(1,0.4)
 \psline[linestyle=dashed](0,0.1)(1,0.1)
 \psline[linestyle=dashed](0.5,0.1)(0.5,0.5)
-\psline[linestyle=dashed](0.5,0.5)(1,0.5)\end{pspicture}
+\psline[linestyle=dashed](0.5,0.5)(1,0.5)
+\end{pspicture}
 \caption{host-shift}
 \end{subfigure}
 \begin{subfigure}[b]{0.2\textwidth}
@@ -113,11 +121,29 @@ A likelihood implementation has many advantages \parencite{Charleston:2009}.
 \caption{Diagrams of the four cophylogenetic events considered in my model, which was coined the four-event model by \textcite{Ronquist:2003}, where the host phylogeny and the symbiont dashed. All events are branch events (i.e., they can occur at any point), except cospeciation, which is a nodal event (and thus can occur only when the host speciates).}
 \end{figure}
 
+\section*{Materials and Methods}
+
+%\begin{equation}
+%P\left(M,\Theta_M|D\right) \propto \int\limits_{T_H \times T_S} \overbrace{P\left(d_H|t_H,\theta_H\right)}^{\mathclap{\text{Felsenstein likelihood for host tree}}} \underbrace{P\left(d_S|t_S,\theta_S\right)}_{\mathclap{\text{Felsenstein likelihood for symbiont tree}}} P\left(d_M|M,\theta_M,t_H,t_S\right) P\left(M\right) \textrm{d}T_H \times T_S 
+%\end{equation}
+
+\begin{equation}
+P\left(m,\Theta|D\right) \propto \int\limits_{T_H \times T_S}  P\left(d_M|m, \theta_M\right) P\left(t_H|d_H,\theta_H\right) P\left(t_S|d_S,\theta_S\right) P\left(\theta_H\right) \textrm{d} t_H t_S 
+\end{equation}
+
+This integral can be approximated via a \ac{MCMC} analysis.
+
+Nevertheless, it is possible to model these events on the principle of observation; i.e., what specific event or events are we observing.
+
+For example, we can consider molecular evolution.
+
 \section*{Results}
 
 \section*{Discussion}
 
 \section*{Conclusions and Future Work}
+
+The effects of the cophylogenetic likelihood on mixing of the MCMC chain needs to be seriously investigated.
 
 \printbibliography
 
