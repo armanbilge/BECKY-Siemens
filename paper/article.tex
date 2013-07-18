@@ -39,12 +39,11 @@
 \title{BECKY:\\Bayesian Estimation of Coevolutionary KrYteria}
 %\author{Arman Bilge}
 
-\begin{document}
+% Acronyms
+\acrodef{MCMC}{Markov chain Monte Carlo}
+\acrodef{GTR}{general time reversible}
 
-\begin{acronym}
-  \acro{MCMC}{Markov chain Monte Carlo}
-  \acro{GTR}{general time reversible}
-\end{acronym}
+\begin{document}
 
 \begin{titlepage}
 \null
@@ -128,7 +127,7 @@ A likelihood implementation has many advantages \parencite{Charleston:2009}.
 %\end{equation}
 
 \begin{equation}
-P\left(m,\Theta|D\right) \propto \int\limits_{T_H \times T_S}  P\left(d_M|m, \theta_M\right) P\left(t_H|d_H,\theta_H\right) P\left(t_S|d_S,\theta_S\right) P\left(\theta_H\right) \textrm{d} t_H t_S 
+P\left(m,\theta|D\right) \propto \int\limits_{T_\textrm{H} \times T_\textrm{S}}  P\left(d_\textrm{M}|m, \theta\right) P\left(t_\textrm{H}|d_\textrm{H}\right) P\left(t_\textrm{S}|d_\textrm{S}\right) P\left(\theta\right) \textrm{d} t_\textrm{H},t_\textrm{S} 
 \end{equation}
 
 This integral can be approximated via a \ac{MCMC} analysis.
