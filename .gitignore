@@ -2,7 +2,7 @@
 *.bbl
 *.bcf
 *.blg
-*.gz
+*.gz*
 *.log
 *.pdf
 *.xml
