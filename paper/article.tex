@@ -7,21 +7,23 @@
 \usepackage{acronym}
 \usepackage{csquotes}
 \usepackage{fixltx2e}
+\usepackage{url}
 \usepackage{mathptmx}
 \usepackage{setspace}
 \usepackage{units}
 \frenchspacing
+
+% Graphics
+\usepackage{graphicx}
+\usepackage[pdf]{pstricks}
+\psset{unit=1in,linewidth=0.02,arrows=C-C,arrowsize=0.2}
 
 % Bibliography
 \usepackage[american]{babel}
 \usepackage[backend=biber,style=apa]{biblatex}
 \DeclareLanguageMapping{american}{american-apa}
 \bibliography{bibliography.bib}
-
-% Graphics
-\usepackage{graphicx}
-\usepackage[pdf]{pstricks}
-\psset{unit=1in,linewidth=0.02}
+\usepackage{doi}
 
 % Figures, tables, and captions
 \usepackage{float}
@@ -35,9 +37,9 @@
 \usepackage{amsmath}
 \usepackage{algorithm2e}
 \usepackage{mathtools}
+\usepackage{commath}
 
-\title{BECKY:\\Bayesian Estimation of Coevolutionary KrYteria}
-%\author{Arman Bilge}
+\title{Bayesian Reconstruction of Coevolutionary Histories}
 
 % Acronyms
 \acrodef{MCMC}{Markov chain Monte Carlo}
@@ -48,10 +50,25 @@
 \begin{titlepage}
 \null
 \vfil
-\let\newpage\relax\maketitle
+\let\newpage\relax
+\maketitle
 \vfil
 \centering
-\includegraphics[width=2.5in]{figures/icon.pdf}
+\begin{pspicture}(16,12)
+\psset{unit=0.5cm,linewidth=0.2}
+\psline[linecolor=blue](0,0)(10,10)
+\psline[linecolor=blue](4,0)(2,2)
+\psline[linecolor=blue](8,0)(4,4)
+\psline[linecolor=blue](12,0)(14,2)
+\psline[linecolor=blue](16,0)(8,8)
+\psline[linecolor=red](-1,0)(9,10)
+\psline[linecolor=red](15,0)(7,8)
+\psline[linecolor=red](11,0)(13,2)
+\psline[linecolor=red](4,3)(12,3)
+\psline[linecolor=red,arrows=<-](8,3)(12,3)
+\psline[linecolor=red](7,0)(4,3)
+
+\end{pspicture}
 \vfil
 \end{titlepage}
 
@@ -76,48 +93,49 @@ A likelihood implementation has many advantages \parencite{Charleston:2009}.
 \begin{subfigure}[b]{0.2\textwidth}
 \centering
 \begin{pspicture}(1,1)
-\psline(0,0.5)(0.5,0.5)
-\psline(0.5,0.3)(1,0.3)
-\psline(0.5,0.7)(1,0.7)
-\psline(0.5,0.3)(0.5,0.7)
-\psline[linestyle=dashed](0,0.6)(0.4,0.6)
-\psline[linestyle=dashed](0.4,0.4)(1,0.4)
-\psline[linestyle=dashed](0.4,0.8)(1,0.8)
-\psline[linestyle=dashed](0.4,0.4)(0.4,0.8)
+\psline[linecolor=blue](0,0.5)(0.5,0.5)
+\psline[linecolor=blue](0.5,0.3)(1,0.3)
+\psline[linecolor=blue](0.5,0.7)(1,0.7)
+\psline[linecolor=blue](0.5,0.3)(0.5,0.7)
+\psline[linecolor=red](0.4,0.4)(1,0.4)
+\psline[linecolor=red](0.4,0.8)(1,0.8)
+\psline[linecolor=red](0.4,0.4)(0.4,0.8)
+\psline[linecolor=red,arrows=-o](0,0.6)(0.4,0.6)
 \end{pspicture}
 \caption{cospeciation}
 \end{subfigure}
 \begin{subfigure}[b]{0.2\textwidth}
 \centering
 \begin{pspicture}(1,1)
-\psline(0,0)(1,0)
-\psline[linestyle=dashed](0,0.1)(1,0.1)
-\psline[linestyle=dashed](0.5,0.1)(0.5,0.3)
-\psline[linestyle=dashed](0.5,0.3)(1,0.3)
+\psline[linecolor=blue](0,0)(1,0)
+\psline[linecolor=red](0,0.1)(1,0.1)
+\psline[linecolor=red,arrows=*-](0.5,0.1)(0.5,0.3)
+\psline[linecolor=red](0.5,0.3)(1,0.3)
 \end{pspicture}
 \caption{duplication}
 \end{subfigure}
 \begin{subfigure}[b]{0.2\textwidth}
 \centering
 \begin{pspicture}(1,1)
-\psline(0,0)(1,0)
-\psline(0,0.4)(1,0.4)
-\psline[linestyle=dashed](0,0.1)(1,0.1)
-\psline[linestyle=dashed](0.5,0.1)(0.5,0.5)
-\psline[linestyle=dashed](0.5,0.5)(1,0.5)
+\psline[linecolor=blue](0,0)(1,0)
+\psline[linecolor=blue](0,0.4)(1,0.4)
+\psline[linecolor=red](0,0.1)(1,0.1)
+\psline[linecolor=red](0.5,0.1)(0.5,0.5)
+\psline[linecolor=red,arrows=->,arrowsize=0.1](0.5,0.1)(0.5,0.35)
+\psline[linecolor=red](0.5,0.5)(1,0.5)
 \end{pspicture}
 \caption{host-shift}
 \end{subfigure}
 \begin{subfigure}[b]{0.2\textwidth}
 \centering
 \begin{pspicture}(1,1)
-\psline(0,0)(1,0)
-\psline[linestyle=dashed](0,0.1)(0.8,0.1)
-\rput(0.8,0.1){\textsf{X}}
+\psline[linecolor=blue](0,0)(1,0)
+\psline[linecolor=red](0,0.1)(0.8,0.1)
+\rput(0.8,0.1){\large\textcolor{red}{\textsf{x}}}
 \end{pspicture}
 \caption{loss}
 \end{subfigure}
-\caption{Diagrams of the four cophylogenetic events considered in my model, which was coined the four-event model by \textcite{Ronquist:2003}, where the host phylogeny and the symbiont dashed. All events are branch events (i.e., they can occur at any point), except cospeciation, which is a nodal event (and thus can occur only when the host speciates).}
+\caption{Diagrams of the four cophylogenetic events considered in my model, where the host organism's phylogeny is in blue and the symbiont phylogeny in red. All events are branch events (i.e., they can occur at any point along a branch), except cospeciation, which is a nodal event (and thus can occur only when the host speciates).}
 \end{figure}
 
 \section*{Materials and Methods}
@@ -126,15 +144,15 @@ A likelihood implementation has many advantages \parencite{Charleston:2009}.
 %P\left(M,\Theta_M|D\right) \propto \int\limits_{T_H \times T_S} \overbrace{P\left(d_H|t_H,\theta_H\right)}^{\mathclap{\text{Felsenstein likelihood for host tree}}} \underbrace{P\left(d_S|t_S,\theta_S\right)}_{\mathclap{\text{Felsenstein likelihood for symbiont tree}}} P\left(d_M|M,\theta_M,t_H,t_S\right) P\left(M\right) \textrm{d}T_H \times T_S 
 %\end{equation}
 
-\begin{equation}
-P\left(m,\theta|D\right) \propto \int\limits_{T_\textrm{H} \times T_\textrm{S}}  P\left(d_\textrm{M}|m, \theta\right) P\left(t_\textrm{H}|d_\textrm{H}\right) P\left(t_\textrm{S}|d_\textrm{S}\right) P\left(\theta\right) \textrm{d} t_\textrm{H},t_\textrm{S} 
-\end{equation}
-
-This integral can be approximated via a \ac{MCMC} analysis.
-
-Nevertheless, it is possible to model these events on the principle of observation; i.e., what specific event or events are we observing.
-
-For example, we can consider molecular evolution.
+%\begin{equation}
+%P\left(m,\theta|D\right) \propto \int\limits_{T_\textrm{H} \times T_\textrm{S}}  P\left(d_\textrm{M}|m, \theta\right) P\left(t_\textrm{H}|d_\textrm{H}\right) P\left(t_\textrm{S}|d_\textrm{S}\right) P\left(\theta\right) \textrm{d} t_\textrm{H},t_\textrm{S} 
+%\end{equation}
+%
+%This integral can be approximated via a \ac{MCMC} analysis.
+%
+%Nevertheless, it is possible to model these events on the principle of observation; i.e., what specific event or events are we observing.
+%
+%For example, we can consider molecular evolution.
 
 \section*{Results}
 
@@ -142,7 +160,7 @@ For example, we can consider molecular evolution.
 
 \section*{Conclusions and Future Work}
 
-The effects of the cophylogenetic likelihood on mixing of the MCMC chain needs to be seriously investigated.
+%The effects of the cophylogenetic likelihood on mixing of the MCMC chain needs to be seriously investigated.
 
 \printbibliography
 
