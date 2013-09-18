@@ -42,8 +42,9 @@
 \title{Bayesian Reconstruction of Coevolutionary Histories}
 
 % Acronyms
-\acrodef{MCMC}{Markov chain Monte Carlo}
 \acrodef{GTR}{general time reversible}
+\acrodef{MCMC}{Markov chain Monte Carlo}
+
 
 \begin{document}
 
@@ -54,20 +55,24 @@
 \maketitle
 \vfil
 \centering
-\begin{pspicture}(16,12)
+\begin{pspicture}(18,12)
 \psset{unit=0.5cm,linewidth=0.2}
 \psline[linecolor=blue](0,0)(10,10)
 \psline[linecolor=blue](4,0)(2,2)
 \psline[linecolor=blue](8,0)(4,4)
 \psline[linecolor=blue](12,0)(14,2)
 \psline[linecolor=blue](16,0)(8,8)
-\psline[linecolor=red](-1,0)(9,10)
-\psline[linecolor=red](15,0)(7,8)
-\psline[linecolor=red](11,0)(13,2)
-\psline[linecolor=red](4,3)(12,3)
-\psline[linecolor=red,arrows=<-](8,3)(12,3)
-\psline[linecolor=red](7,0)(4,3)
-
+\psline[linecolor=red](1,0)(11,10)
+\psline[linecolor=red,arrows=-o](17,0)(9,8)
+\psline[linecolor=red,arrows=-o](13,0)(15,2)
+\psline[linecolor=red](7,3)(14,3)
+\psline[linecolor=red,arrows=<-](10,3)(14,3)
+\psline[linecolor=red](10,0)(7,3)
+\psline[linecolor=red,arrows=-o](9,0)(5,4)
+\psline[linecolor=red,arrows=-o](4,1)(3,2)
+\rput{135}(4,1){\LARGE\textcolor{red}{\textsf{\textbf{x}}}}
+\psline[linecolor=red](18,0)(17,1)
+\psline[linecolor=red,arrows=*-](16,1)(17,1)
 \end{pspicture}
 \vfil
 \end{titlepage}
@@ -78,15 +83,25 @@
 
 \section*{Introduction}
 
-Considerable . To date, there are a number of tools available for .
+%Considerable . To date, there are a number of tools available for .
+%
+%It is important to note that the host-symbiont [reconciliation] problem is largely similar to the gene tree--species tree [reconciliation] problem. Accordingly, it is worth comparing these 
+%
+%\textcite{Akerborg:2009} compare [reconciliation] methods to the evolution of methods for phylogenetic evidence, highlighting the shift to the probabilistic, and in particular, Bayesian approach.
+%
+%However, problems similar to those of parsimony inference of phylogeny also plague parsimony inference of cophylogenetic mappings.
+%
+%A likelihood implementation has many advantages \parencite{Charleston:2009}.
 
-It is important to note that the host-symbiont [reconciliation] problem is largely similar to the gene tree--species tree [reconciliation] problem. Accordingly, it is worth comparing these 
+Symbiotic relationships, or interactions between organisms of different species, occur in all domains of life
 
-\textcite{Akerborg:2009} compare [reconciliation] methods to the evolution of methods for phylogenetic evidence, highlighting the shift to the probabilistic, and in particular, Bayesian approach.
+The emergence of DNA sequencing techniques in the late twentieth century encouraged the development of statistical methods to compare sequences .
 
-However, problems similar to those of parsimony inference of phylogeny also plague parsimony inference of cophylogenetic mappings.
+The graphs , known as phylogenetic trees, denote the ancestral relationships between the individuals, thus providing a window into the evolution of an organism.
 
-A likelihood implementation has many advantages \parencite{Charleston:2009}.
+Recent work has also revealed discrepancies between phylogenies of individual, independently-evolving genes and species trees
+
+I develop a simple model to describe a cophylogenetic process
 
 \begin{figure}
 \centering
@@ -135,7 +150,7 @@ A likelihood implementation has many advantages \parencite{Charleston:2009}.
 \end{pspicture}
 \caption{loss}
 \end{subfigure}
-\caption{Diagrams of the four cophylogenetic events considered in my model, where the host organism's phylogeny is in blue and the symbiont phylogeny in red. All events are branch events (i.e., they can occur at any point along a branch), except cospeciation, which is a nodal event (and thus can occur only when the host speciates).}
+\caption{Diagrams of the four cophylogenetic events considered in my model, where the host organism's phylogeny is in blue and the symbiont phylogeny in red. All events are branch events (i.e., they can occur at any point along a branch) except cospeciation, which is a nodal event (and thus can occur only when the host speciates).}
 \end{figure}
 
 \section*{Materials and Methods}
@@ -154,6 +169,12 @@ A likelihood implementation has many advantages \parencite{Charleston:2009}.
 %
 %For example, we can consider molecular evolution.
 
+\begin{equation}
+P\left(S,M,\theta|D\right) \propto \int P\left(D|S,\theta\right) P\left(S|H,M,\theta\right) P\left(\theta\right) \dif 
+\end{equation}
+
+I implemented the described model in the Java language as a plugin for the BEAST program \parencite{Drummond:2012} for Bayesian evolutionary analysis via \ac{MCMC} simulation. There were several advantages , including  the existing \ac{MCMC} framework and evolutionary library, the number of models, and the ability to utilize any future models developed for BEAST.
+
 \section*{Results}
 
 \section*{Discussion}
@@ -161,6 +182,8 @@ A likelihood implementation has many advantages \parencite{Charleston:2009}.
 \section*{Conclusions and Future Work}
 
 %The effects of the cophylogenetic likelihood on mixing of the MCMC chain needs to be seriously investigated.
+
+There are several avenues upon to expand the simple cophylogeny model. 
 
 \printbibliography
 
