@@ -23,6 +23,7 @@
 \usepackage[backend=biber,style=apa]{biblatex}
 \DeclareLanguageMapping{american}{american-apa}
 \bibliography{bibliography.bib}
+\newcommand{\citeapos}[1]{\citeauthor{#1}'s (\citeyear{#1})}
 \usepackage{doi}
 
 % Figures, tables, and captions
@@ -93,15 +94,25 @@
 %
 %A likelihood implementation has many advantages \parencite{Charleston:2009}.
 
-Symbiotic relationships, or interactions between organisms of different species, occur in all domains of life
+%Symbiotic relationships, or interactions between organisms of different species, occur in all domains of life
+%
+%The emergence of DNA sequencing techniques in the late twentieth century encouraged the development of statistical methods to compare sequences .
+%
+%The graphs , known as phylogenetic trees, denote the ancestral relationships between the individuals, thus providing a window into the evolution of an organism.
+%
+%Recent work has also revealed discrepancies between phylogenies of individual, independently-evolving genes and species trees
+%
+%I develop a simple model to describe a cophylogenetic process
 
-The emergence of DNA sequencing techniques in the late twentieth century encouraged the development of statistical methods to compare sequences .
+Organismic symbioses, or interactions between individuals of two or more different species, constitute a fundamental aspect of many biological systems and occur across the domains of life. Symbiotic relationships differ on multiple spectrums, such as degrees of cooperation (parasitism vs. mutualism), fidelity (generalists utilizing multiple symbionts vs. specialized, species--species-specific associations), and obligation (optional vs. vital to survival). Understanding how these relationships evolve and, in particular, how symbionts affect their partners' evolution---that is, the coevolutionary processes driven by symbiotic interactions---remain important questions in evolutionary biology.
 
-The graphs , known as phylogenetic trees, denote the ancestral relationships between the individuals, thus providing a window into the evolution of an organism.
+Phylogenies, or evolutionary trees, can provide a valuable perspective to such evolutionary processes. 
 
-Recent work has also revealed discrepancies between phylogenies of individual, independently-evolving genes and species trees
+\textcite{Felsenstein:1981} introduced a likelihood
 
-I develop a simple model to describe a cophylogenetic process
+Bayesian inference relies on the principle of Bayes' theorem \parencite{Bayes:1763}; specifically, that the posterior probability of a model's parameters given some data $P\left(\theta|D\right) \propto P\left(D|\theta\right) P\left(\theta\right)$ for a constant dataset, where $\theta$ is the model parameters and $D$ the data. The likelihood, $P\left(D|\theta\right)$, is the probability of simulating the observed data under the model parameters, and the prior, $P\left(\theta\right)$, is the probability of the model parameters. 
+
+An important observation is that host--symbiont phylogenies rarely mirror each other perfectly, even in 
 
 \begin{figure}
 \centering
@@ -169,11 +180,17 @@ I develop a simple model to describe a cophylogenetic process
 %
 %For example, we can consider molecular evolution.
 
+Given data $D = \left(d_H,d_S,d_R\right)$, the host sequence data, the symbiont sequence data, and the leaf--leaf associations between the host and symbiont trees, respectively, I define the posterior probability of the host tree $H$ and the symbiont tree $S$, both with branch lengths, and the reconstruction $R$ mapping internal nodes of $S$ to $H$ as
 \begin{equation}
-P\left(S,M,\theta|D\right) \propto \int P\left(D|S,\theta\right) P\left(S|H,M,\theta\right) P\left(\theta\right) \dif 
+P\left(H,S,R|D\right) \propto \int P\left(d_S\right|S) P\left(S|H,R,d_R,\theta\right) P\left(H|d_H\right) P\left(R\right) P\left(\theta\right) \, \dif \theta
 \end{equation}
+where parameters $\theta = \left(\lambda,\tau,\mu\right)$, the duplication, host-switch, and loss rates, respectively. The probability of a tree $T$ given sequence data $D$ is $P\left(T|D\right) \propto P\left(D|T\right) P\left(T\right)$, where the likelihood is generally calculated with \citeapos{Felsenstein:1981} algorithm or a more complex multi-locus model, e.g. the multispecies coalescent \parencite{Heled:2010a}, and the prior with either a coalescent model (e.g., constant size) or a birth-death speciation model \parencite{Gernhard:2008}. In this case, the prior on the symbiont tree is represented instead by the reconstruction likelihood $P\left(S|H,R,d_R,\theta\right)$. Note that I treat the reconstruction parameters $\theta$ as nuisance variables and integrate them out when calculating the posterior probability of the reconstruction.
+
+\subsection*{Estimation of the Reconstruction Likelihood}
 
 I implemented the described model in the Java language as a plugin for the BEAST program \parencite{Drummond:2012} for Bayesian evolutionary analysis via \ac{MCMC} simulation. There were several advantages , including  the existing \ac{MCMC} framework and evolutionary library, the number of models, and the ability to utilize any future models developed for BEAST.
+
+The source code is available under the GNU General Public License version 3 at \url{http://www.github.com/phylocomputing/BECKY}.
 
 \section*{Results}
 
