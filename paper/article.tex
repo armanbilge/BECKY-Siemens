@@ -44,6 +44,7 @@
 \title{Bayesian Reconstruction of Coevolutionary Histories}
 
 % Acronyms
+\acrodef{GMTC}{geographic mosaic theory of coevolution}
 \acrodef{GTR}{general time reversible}
 \acrodef{MCMC}{Markov chain Monte Carlo}
 
@@ -176,6 +177,8 @@ A primary objective of parsimony approaches to the cophylogeny problem is develo
 \label{fig:cophylogeny}
 \end{figure}
 
+Finally, I apply 
+
 \section*{Materials and Methods}
 
 %\begin{equation}
@@ -210,13 +213,27 @@ I implemented the described model in the Java language as a plugin for the BEAST
 \paragraph*{Evaluation on simulated data.}
 In addition to the MCMC components
 
+\paragraph*{Case study: cycad--weevil coevolution}
+
+
+
 \section*{Results}
 
 \paragraph*{Simulated data.}
 
-\paragraph*{Case study: cycad--weevil}
+\paragraph*{Cycad--weevil coevolution.}
 
 \section*{Discussion}
+
+A important question from the biological perspective is, how fine a scale ? 
+
+In research on gopher--louse
+
+One of the inherent challenges with the cycad--weevil dataset was . 
+
+Some cophylogeny reconstruction programs, such as Jane \parencite{Conow:2010}, consider the \enquote{} event
+
+The greater takeaway, however, is that to to perform a complete, cophylogenetic analysis on a datset
 
 \section*{Conclusions and Future Work}
 
@@ -226,7 +243,11 @@ There are several avenues upon to expand the simple cophylogeny model.
 
 \textcite{Charleston:2002} and \textcite{Faria:2013} both find preferential host-switching to be a phenomenon . 
 
+I discussed . \textcite{Yang:2010} developed a Bayesian \ac{MCMC} methodology to determine the species delimitations between a set of individuals. Maintaining 
+
 The model could also be expanded to support geographical data. In BEAST there are implementations of both discrete and continuous models for phylogeography \parencites{Lemey:2009}{Lemey:2010}, so simply restricting the location of an ancestral symbiont to be that of its host.
+
+\ac{GMTC} . Ultimately, it may be possible , and thus to test the \ac{GMTC} against coevolutionary histories.
 
 \printbibliography
 
