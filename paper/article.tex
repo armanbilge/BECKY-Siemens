@@ -23,7 +23,7 @@
 \usepackage[backend=biber,style=apa]{biblatex}
 \DeclareLanguageMapping{american}{american-apa}
 \bibliography{bibliography.bib}
-\newcommand{\citeapos}[1]{\citeauthor{#1}'s (\citeyear{#1})}
+\newcommand{\citeapos}[2]{\citeauthor{#1}'s #2 (\citeyear{#1})}
 \usepackage{doi}
 
 % Figures, tables, and captions
@@ -33,7 +33,7 @@
 \captionsetup{labelfont=bf,font=small,labelsep=period}
 \usepackage{subcaption}
 \usepackage[rightcaption]{sidecap}
-\usepackage{fancyref}
+\usepackage[plain]{fancyref}
 
 % Math
 \usepackage{amsmath}
@@ -91,19 +91,15 @@
 
 \section*{Introduction}
 
-Organismic symbioses, or interactions between individuals of two or more different species, constitute a fundamental aspect of many living systems and occur across the biological spectrum. The characteristics of symbiotic relationships can vary greatly, particularly in degrees of cooperation (parasitism vs. mutualism), fidelity (generalized symbionts utilizing multiple species vs. specialized, species-specific symbionts), and obligation (optional vs. vital to survival) \parencites{Oberprieler:2005}. Understanding how these relationships evolve and, in particular, how symbionts affect their partners' evolution---that is, the coevolutionary processes driven by symbiotic interactions---remain important questions in ecology and evolutionary biology. 
+Organismic symbioses, or interactions between individuals of two or more different species, constitute a fundamental aspect of many living systems and occur across the biological spectrum. The characteristics of symbiotic relationships can vary greatly, particularly in degrees of cooperation (parasitism vs. mutualism), fidelity (generalized symbionts utilizing multiple species vs. specialized, species-specific symbionts), and obligation (optional vs. vital to survival) \parencites{Charleston:2002}{Oberprieler:2004}{Becerra:2007}{Beinart:2012}{HoyalCuthill:2012}{Thompson:2012}{Faria:2013}. Understanding how these relationships evolve and, in particular, how symbionts affect their partners' evolution---that is, the coevolutionary processes driven by symbiotic interactions---remain important questions in ecology and evolutionary biology. 
 
-Phylogenies, or evolutionary trees, can provide a valuable perspective to evolutionary processes. The topology of the tree depicts the set of speciation events that gave rise to those taxa and thus their ancestral relationships. Often, the lengths of branches indicate the number of substitutions (e.g., genetic mutations) accumulated or the amount of time passed at that particular lineage. By mapping traits such as physical attributes or geographic locations onto a known phylogeny, we can use the tree to learn about the mechanisms under which these traits change.
+Phylogenies, or evolutionary trees, can provide a valuable perspective to evolutionary processes. The topology of the tree depicts the set of speciation events that gave rise to those taxa and thus their ancestral relationships \parencite{Baum:2008}. Often, the lengths of branches indicate the number of substitutions (e.g., genetic mutations) accumulated or the amount of time passed at that particular lineage \parencite{Baum:2008}. By mapping traits such as physical attributes or geographic locations onto a known phylogeny, we can use the tree to learn about the mechanisms under which these traits change \parencites{Lemey:2009}{Lemey:2010}{Segraves:2010}.
 
-Molecular sequences are the primary source of data for . With the advancements of DNA sequencing technology over the last few decades, considerable effort has been invested in developing robust statistical methods for inferring phylogenies from sequence alignments (of both nucleotides and amino acids). One of the earliest methods 
+Molecular sequences are the primary source of data for constructing phylogenies \parencite{Baum:2008}. With the advancements of DNA sequencing technology over the last few decades, considerable effort has been invested in developing robust statistical methods for inferring phylogenies from sequence alignments (of both nucleotides and amino acids) \parencite{Felsenstein:2005}. An early technique involved optimizing the tree topology under the parsimony criterion \parencite{Fitch:1971}. The most parsimonious, or optimal, tree is the \enquote{simplest} explanation for a sequence alignment---the tree involving the least number of substitutions. Following his criticism of parsimony methods \parencite{Felsenstein:1978}, \textcite{Felsenstein:1981} introduced an algorithm calculate the likelihood of a tree given a substitution model for evolution and sequence data. Similar to maximum parsimony, maximum likelihood techniques optimize a tree under Felsenstein's likelihood function, often simultaneously estimating parameter values for the substitution model \parencite{Felsenstein:2005}. The substitution model enables sophisticated models of evolution to be used to infer phylogenies, such as models aware of the underlying molecular evolutionary processes.
 
-\textcite{Felsenstein:1981} introduced a generic algorithm utilizing dynamic programming to calculate the likelihood of a tree given a model for  and sequence data.
+Many recent advances in phylogenetics have focused on methodologies utilizing Bayesian inference \parencites{Ronquist:2012}{Drummond:2012}. Bayesian inference takes its name from Bayes' theorem \parencite{Bayes:1763} and relies on the principle that the posterior probability of a model's parameters~$\theta$ given some data~$D$ is $P\left(\theta|D\right) \propto P\left(D|\theta\right) P\left(\theta\right)$ for a constant dataset. The likelihood, $P\left(D|\theta\right)$, is the probability of simulating the observed data under the model parameters (e.g., \citeauthor{Felsenstein:1981}'s \citeyear{Felsenstein:1981} algorithm), and the prior, $P\left(\theta\right)$, is the probability of the model parameters without considering the data. The prior can be a mechanism to apply previous knowledge to a new analysis; for example, constructing a prior distribution on the mutation rate representative of the rates reported in previous literature will \enquote{bias} the posterior to favor those rates. When explicit prior knowledge is not available, an uninformative prior may be applied.
 
-Many recent advances in phylogenetics have focused on methodologies utilizing Bayesian inference \parencites{Ronquist:2012}{Drummond:2012}. Bayesian inference takes its name from Bayes' theorem \parencite{Bayes:1763} and relies on the principle that the posterior probability of a model's parameters~$\theta$ given some data~$D$ is $P\left(\theta|D\right) \propto P\left(D|\theta\right) P\left(\theta\right)$ for a constant dataset. The likelihood, $P\left(D|\theta\right)$, is the probability of simulating the observed data under the model parameters, and the prior, $P\left(\theta\right)$, is the probability of the model parameters without considering the data. The prior can be a mechanism to apply previous knowledge to a new analysis; for example, constructing a prior distribution on the mutation rate representative of the rates reported in previous literature will \enquote{bias} the posterior to favor those rates. When explicit prior knowledge is not available, an uninformative prior may be applied.
-
-Often we are interested in only some of the parameters (e.g., just the tree topology), in which case we can calculate the posterior probability of specific values for those parameters by integrating over all possible values of the remaining \enquote{nuisance} parameters (branch lengths, mutation rate, etc.). Due to the complexity of the models, the resulting multi-dimensional integral cannot be evaluated directly but instead approximated via \ac{MCMC}.
-
-The Metropolis--Hastings algorithm \parencites{Metropolis:1953}{Hastings:1970} is a common implementation of the \ac{MCMC} method in phylogenetic inference
+Often we are interested in only some of the parameters involved in an analysis (e.g., just the tree topology), in which case we can calculate the posterior probability of specific values for those parameters by integrating over all possible values of the remaining \enquote{nuisance} parameters (branch lengths, mutation rate, etc.). Due to the complexity of the models, the resulting multi-dimensional integral cannot be evaluated directly but instead approximated via \ac{MCMC}. The Metropolis--Hastings algorithm \parencites{Metropolis:1953}{Hastings:1970} is a common implementation of the \ac{MCMC} method in phylogenetic inference
 
 Although there have been criticisms of Bayesian \ac{MCMC} methodologies \parencites{Felsenstein:2005}{Kolaczkowski:2009}, they remain popular for \parencite{}.
 
@@ -111,13 +107,13 @@ Although there have been criticisms of Bayesian \ac{MCMC} methodologies \parenci
 
 An important observation is that host--symbiont phylogenies rarely mirror each other perfectly, even in 
 
-There are a number of , e.g. TreeMap \parencite{}, Tarzan \parencite{Merkle:2005}, CoRe-PA \parencite{Merkle:2010}, Jane \parencite{Conow:2010}, and AnGST \parencite{David:2011}.
+There are a number of , e.g., Tarzan \parencite{Merkle:2005}, CoRe-PA \parencite{Merkle:2010}, Jane \parencite{Conow:2010}, TreeMap \parencite{Charleston:2011}, and AnGST \parencite{David:2011}.
 
 Brooks Parsimony Analysis \parencite{Brooks:1981} and the coalescent \parencite{Rannala:2003} , 
 
 A Bayesian \ac{MCMC} method for inferring cophylogenies also lends a number of advantages.
 
-A primary objective of parsimony approaches to the cophylogeny problem is developing heuristics to find optimal reconstructions quickly. For example, \textcite{Charleston:1998} proposed the \enquote{jungle} concept and the program Jane utilizes a genetic algorithm to find optimal timings \parencite{Conow:2010}. This problem becomes much less of a concern in an \ac{MCMC} framework, because the parameter space is being explored as opposed to maximized (although it is still critical to employ effective operators for efficient mixing of the chain). However, it is important to note that \ac{MCMC} carries a much greater computational expense. 
+A primary objective of parsimony approaches to the cophylogeny problem is developing heuristics to find optimal reconstructions quickly. For example, \textcite{Charleston:1998} proposed the \enquote{jungle} concept and the program Jane utilizes a genetic algorithm to find optimal timings \parencite{Conow:2010}. This problem becomes much less of a concern in an \ac{MCMC} framework, because the parameter space is being explored as opposed to maximized (although it is still critical to employ effective operators for efficient mixing of the chain). However, it is important to note that \ac{MCMC} methods carry a much greater computational expense. 
 
 I describe a simple cophylogeny model that approximates and implement it in a Bayesian framework. 
 
@@ -172,12 +168,12 @@ I describe a simple cophylogeny model that approximates and implement it in a Ba
 \label{fig:events}
 \end{figure}
 
-\begin{figure}
+\begin{SCfigure}
 \centering
 \pscophylogeny
-\caption{An example of a coevolutionary history, where notation corresponds with the four events depicted in \Fref{fig:events}.}
+\caption{An example of a coevolutionary history, with the host phylogeny in blue, the symbiont phylogeny in red, and symbols corresponding with the four events depicted in \Fref{fig:events}.}
 \label{fig:cophylogeny}
-\end{figure}
+\end{SCfigure}
 
 Finally, I apply 
 
@@ -200,7 +196,7 @@ Finally, I apply
 Given data~$D = \left(d_H,d_S,d_R\right)$, the host sequence data, the symbiont sequence data, and the leaf--leaf associations between the host and symbiont trees, respectively, I define the posterior probability of the host tree~$H$ and the symbiont tree~$S$, both with branch lengths, and the reconstruction~$R$ mapping internal nodes of $S$ to $H$ as
 \begin{equation}
 P\left(H,S,R|D\right) \propto \int P\left(d_S\right|S) P\left(S|H,R,d_R,\theta\right) P\left(H|d_H\right) P\left(R\right) P\left(\theta\right) \, \dif \theta
-\label{eq:cophylogenylikelihood}
+\label{eq:cophylogenyposterior}
 \end{equation}
 where parameters $\theta = \left(\lambda,\tau,\mu\right)$, the duplication, host-switch, and loss rates, respectively, and are integrated out. The probability of a tree~$T$ given sequence data~$D$ is $P\left(T|D\right) \propto P\left(D|T\right) P\left(T\right)$, where the likelihood is generally calculated with \citeapos{Felsenstein:1981} algorithm or a more complex multi-locus model, e.g. the multispecies coalescent \parencite{Heled:2010a}, and the prior with either a coalescent model \parencite{Kingman:1982} or a birth-death speciation model \parencite{Gernhard:2008}. In this case, the prior on the symbiont tree is represented instead by the reconstruction likelihood $P\left(S|H,R,d_R,\theta\right)$.
 
@@ -209,20 +205,43 @@ where parameters $\theta = \left(\lambda,\tau,\mu\right)$, the duplication, host
 \KwIn{Host Tree $H$, Symbiont Tree $S$, }
 \end{algorithm}
 
-
+\begin{SCfigure}[1.5]
+\centering
+\begin{pspicture}(18,12)
+\psset{unit=0.25cm,linewidth=0.3}
+\psline(0,0)(10,10)
+\psline(4,0)(2,2)
+\psline(8,0)(4,4)
+\psline(12,0)(14,2)
+\psline(16,0)(8,8)
+\rput(0,-0.75){\small\textbf{1}}
+\rput(4,-0.75){\small\textbf{2}}
+\rput(8,-0.75){\small\textbf{3}}
+\rput(12,-0.75){\small\textbf{4}}
+\rput(16,-0.75){\small\textbf{5}}
+\rput(16,-0.75){\small\textbf{5}}
+\rput(1.5,2.5){\small\textbf{6}}
+\rput(3.5,4.5){\small\textbf{7}}
+\rput(14.5,2.5){\small\textbf{8}}
+\rput(7.5,8.5){\small\textbf{9}}
+\end{pspicture}
+\caption{In the depicted topology, node 6 is a descendant of nodes 7 and 9, an ancestor of nodes 1 and 2, and a cousin of all other nodes.}
+\label{fig:nodalrelationships}
+\end{SCfigure}
 
 \paragraph*{Calculating the event probabilities.} 
 
+I model the three 
+
+: we may be observing a loss event on that particular branch, or, alternatively, no event at this branch and some series of loss events along its child branches. Hence, the probability of observing a loss event along a branch $b(N)$ of $H$ is a summation over all permutations of loss events that . 
 
 \paragraph*{Implementation in a Bayesian framework.}
 
-I implemented the described model in the Java language as a plugin for the BEAST program \parencite{Drummond:2012} for Bayesian evolutionary analysis via \ac{MCMC} simulation. There were several advantages to integrating my work into BEAST, particularly the existing \ac{MCMC} framework and evolutionary library consisting of numerous models.
+I implemented the described model in the Java language as a plugin for the BEAST program \parencite{Drummond:2012} for Bayesian evolutionary analysis via \ac{MCMC} analysis. There were several advantages to integrating my work into BEAST, particularly the existing \ac{MCMC} framework and evolutionary library consisting of numerous models.
 
-To provide support for rate variation over the symbiont phylogeny, . Due to the additional free parameter, I fix the loss rate~$\mu$ at $1$, such that the duplication and host-switch rates $\lambda$ and $\tau$ are normalized against it.
+To provide support for rate variation over the symbiont phylogeny, a clock model provides the rate. Due to the additional free parameter, I fix the loss rate~$\mu$ at $1$, such that the duplication and host-switch rates $\lambda$ and $\tau$ are normalized against it.
 
-The priors remained to be defined.
-
-A uniform prior is assumed over $R$.
+The two priors established in \Fref{eq:cophylogenyposterior} remain to be defined. I assume a uniform distribution over $R$, so $P(R) \propto 1$.
 
 Finally, I define a simple \textsc{host shift operator} to . An internal node $n_S$ from $S$ is selected at random and is assigned a new host node from the set of host lineages existing at time $t = height(n_S)$.\
 
@@ -230,11 +249,11 @@ The source code is available under the GNU General Public License at \url{http:/
 
 \paragraph*{Evaluation of simulated data.}
 
-I simulate the host tree $H$ under the constant-size coalescent \parencite{Kingman:1982} as implemented in BEAST \parencite{Drummmond:2012}
+I simulate the host tree $H$ under the constant-size coalescent \parencite{Kingman:1982} as implemented in BEAST \parencite{Drummond:2012}
 
 Two simulations
 
-\paragraph*{Case study: cycad--weevil coevolution}
+%\paragraph*{Case study: cycad--weevil coevolution}
 
 
 
@@ -242,7 +261,7 @@ Two simulations
 
 \paragraph*{Simulated data.}
 
-\paragraph*{Cycad--weevil coevolution.}
+%\paragraph*{Cycad--weevil coevolution.}
 
 \section*{Discussion}
 
