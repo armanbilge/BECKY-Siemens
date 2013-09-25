@@ -91,7 +91,7 @@
 
 \section*{Introduction}
 
-Organismic symbioses, or interactions between individuals of two or more different species, constitute a fundamental aspect of many living systems and occur across the biological spectrum. The characteristics of symbiotic relationships can vary greatly, particularly in degrees of cooperation (parasitism vs. mutualism), fidelity (generalized symbionts utilizing multiple species vs. specialized, species-specific symbionts), and obligation (optional vs. vital to survival). Understanding how these relationships evolve and, in particular, how symbionts affect their partners' evolution---that is, the coevolutionary processes driven by symbiotic interactions---remain important questions in ecology and evolutionary biology. 
+Organismic symbioses, or interactions between individuals of two or more different species, constitute a fundamental aspect of many living systems and occur across the biological spectrum. The characteristics of symbiotic relationships can vary greatly, particularly in degrees of cooperation (parasitism vs. mutualism), fidelity (generalized symbionts utilizing multiple species vs. specialized, species-specific symbionts), and obligation (optional vs. vital to survival) \parencites{Oberprieler:2005}. Understanding how these relationships evolve and, in particular, how symbionts affect their partners' evolution---that is, the coevolutionary processes driven by symbiotic interactions---remain important questions in ecology and evolutionary biology. 
 
 Phylogenies, or evolutionary trees, can provide a valuable perspective to evolutionary processes. The topology of the tree depicts the set of speciation events that gave rise to those taxa and thus their ancestral relationships. Often, the lengths of branches indicate the number of substitutions (e.g., genetic mutations) accumulated or the amount of time passed at that particular lineage. By mapping traits such as physical attributes or geographic locations onto a known phylogeny, we can use the tree to learn about the mechanisms under which these traits change.
 
@@ -107,7 +107,7 @@ The Metropolis--Hastings algorithm \parencites{Metropolis:1953}{Hastings:1970} i
 
 Although there have been criticisms of Bayesian \ac{MCMC} methodologies \parencites{Felsenstein:2005}{Kolaczkowski:2009}, they remain popular for \parencite{}.
 
-\textcite{Haffner:1988} were some of the first researchers to apply these new phylogenetic methods 
+\textcite{Haffner:1988} were the first to apply phylogenetic methods  
 
 An important observation is that host--symbiont phylogenies rarely mirror each other perfectly, even in 
 
@@ -118,6 +118,8 @@ Brooks Parsimony Analysis \parencite{Brooks:1981} and the coalescent \parencite{
 A Bayesian \ac{MCMC} method for inferring cophylogenies also lends a number of advantages.
 
 A primary objective of parsimony approaches to the cophylogeny problem is developing heuristics to find optimal reconstructions quickly. For example, \textcite{Charleston:1998} proposed the \enquote{jungle} concept and the program Jane utilizes a genetic algorithm to find optimal timings \parencite{Conow:2010}. This problem becomes much less of a concern in an \ac{MCMC} framework, because the parameter space is being explored as opposed to maximized (although it is still critical to employ effective operators for efficient mixing of the chain). However, it is important to note that \ac{MCMC} carries a much greater computational expense. 
+
+I describe a simple cophylogeny model that approximates and implement it in a Bayesian framework. 
 
 \begin{figure}
 \centering
@@ -173,7 +175,7 @@ A primary objective of parsimony approaches to the cophylogeny problem is develo
 \begin{figure}
 \centering
 \pscophylogeny
-\caption{An example reconstruction of a coevolutionary history, where notation follows \Fref{fig:events}.}
+\caption{An example of a coevolutionary history, where notation corresponds with the four events depicted in \Fref{fig:events}.}
 \label{fig:cophylogeny}
 \end{figure}
 
@@ -198,6 +200,7 @@ Finally, I apply
 Given data~$D = \left(d_H,d_S,d_R\right)$, the host sequence data, the symbiont sequence data, and the leaf--leaf associations between the host and symbiont trees, respectively, I define the posterior probability of the host tree~$H$ and the symbiont tree~$S$, both with branch lengths, and the reconstruction~$R$ mapping internal nodes of $S$ to $H$ as
 \begin{equation}
 P\left(H,S,R|D\right) \propto \int P\left(d_S\right|S) P\left(S|H,R,d_R,\theta\right) P\left(H|d_H\right) P\left(R\right) P\left(\theta\right) \, \dif \theta
+\label{eq:cophylogenylikelihood}
 \end{equation}
 where parameters $\theta = \left(\lambda,\tau,\mu\right)$, the duplication, host-switch, and loss rates, respectively, and are integrated out. The probability of a tree~$T$ given sequence data~$D$ is $P\left(T|D\right) \propto P\left(D|T\right) P\left(T\right)$, where the likelihood is generally calculated with \citeapos{Felsenstein:1981} algorithm or a more complex multi-locus model, e.g. the multispecies coalescent \parencite{Heled:2010a}, and the prior with either a coalescent model \parencite{Kingman:1982} or a birth-death speciation model \parencite{Gernhard:2008}. In this case, the prior on the symbiont tree is represented instead by the reconstruction likelihood $P\left(S|H,R,d_R,\theta\right)$.
 
@@ -206,12 +209,30 @@ where parameters $\theta = \left(\lambda,\tau,\mu\right)$, the duplication, host
 \KwIn{Host Tree $H$, Symbiont Tree $S$, }
 \end{algorithm}
 
-\paragraph*{The host-switch operator.}
 
-I implemented the described model in the Java language as a plugin for the BEAST program \parencite{Drummond:2012} for Bayesian evolutionary analysis via \ac{MCMC} simulation. There were several advantages , including  the existing \ac{MCMC} framework and evolutionary library, the number of models, and the ability to utilize any future models developed for BEAST. The source code is available under the GNU General Public License at \url{http://www.github.com/phylocomputing/BECKY}. I provide a Python script to help modify existing BEAST XML analysis specifications to incorporate my cophylogeny model.
 
-\paragraph*{Evaluation on simulated data.}
-In addition to the MCMC components
+\paragraph*{Calculating the event probabilities.} 
+
+
+\paragraph*{Implementation in a Bayesian framework.}
+
+I implemented the described model in the Java language as a plugin for the BEAST program \parencite{Drummond:2012} for Bayesian evolutionary analysis via \ac{MCMC} simulation. There were several advantages to integrating my work into BEAST, particularly the existing \ac{MCMC} framework and evolutionary library consisting of numerous models.
+
+To provide support for rate variation over the symbiont phylogeny, . Due to the additional free parameter, I fix the loss rate~$\mu$ at $1$, such that the duplication and host-switch rates $\lambda$ and $\tau$ are normalized against it.
+
+The priors remained to be defined.
+
+A uniform prior is assumed over $R$.
+
+Finally, I define a simple \textsc{host shift operator} to . An internal node $n_S$ from $S$ is selected at random and is assigned a new host node from the set of host lineages existing at time $t = height(n_S)$.\
+
+The source code is available under the GNU General Public License at \url{http://www.github.com/phylocomputing/BECKY}. I provide a Python script to help modify BEAST XML files to i.
+
+\paragraph*{Evaluation of simulated data.}
+
+I simulate the host tree $H$ under the constant-size coalescent \parencite{Kingman:1982} as implemented in BEAST \parencite{Drummmond:2012}
+
+Two simulations
 
 \paragraph*{Case study: cycad--weevil coevolution}
 
