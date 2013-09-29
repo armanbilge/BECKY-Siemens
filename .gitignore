@@ -7,3 +7,4 @@
 *.pdf
 *.xml
 *.out
+tmp*

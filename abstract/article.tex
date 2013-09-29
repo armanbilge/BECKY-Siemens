@@ -1,0 +1,95 @@
+% !TEX TS-program = pdflatex
+% !BIB TS-program = biber
+\documentclass[12pt,letterpaper]{article}
+
+% Layout and formatting
+\usepackage[margin=1in]{geometry}
+\usepackage{acronym}
+\usepackage{csquotes}
+\usepackage{fixltx2e}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{setspace}
+\usepackage{units}
+%\usepackage{etoolbox}
+%\BeforeBeginEnvironment{equation}{\begin{singlespace}}
+%\AfterEndEnvironment{equation}{\end{singlespace}\noindent\ignorespaces}
+%\BeforeBeginEnvironment{align}{\begin{singlespace}}
+%\AfterEndEnvironment{align}{\end{singlespace}\noindent\ignorespaces}
+\frenchspacing
+
+% Graphics
+\usepackage{graphicx}
+\usepackage[pdf]{pstricks}
+\psset{unit=1in,linewidth=0.02,arrows=C-C,arrowsize=0.2}
+
+% Bibliography
+\usepackage[american]{babel}
+\usepackage[backend=biber,style=apa]{biblatex}
+\DeclareLanguageMapping{american}{american-apa}
+%\bibliography{bibliography.bib}
+\newcommand{\aposcite}[2]{\citeauthor{#1}'s #2 (\citeyear{#1})}
+\usepackage{doi}
+
+% Figures, tables, and captions
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage[hypcap]{caption}
+\captionsetup{labelfont=bf,font=small,labelsep=period}
+\usepackage{subcaption}
+\usepackage[rightcaption]{sidecap}
+\usepackage[plain]{fancyref}
+
+% Math
+\usepackage{amsmath}
+\usepackage[algoruled]{algorithm2e}
+\usepackage{mathtools}
+\usepackage{commath}
+
+\newcommand{\R}{\ensuremath{\mathcal{R}}}
+
+\title{Bayesian Reconstruction of Coevolutionary Histories}
+
+% Acronyms
+\acrodef{GMTC}{geographic mosaic theory of coevolution}
+\acrodef{GTR}{general time reversible}
+\acrodef{MCMC}{Markov chain Monte Carlo}
+\acrodef{ESS}{estimated sample size}
+\acrodef{MCC}{maximum clade credibility}
+
+% Reusable figures
+\newcommand{\pscophylogeny}{
+\begin{pspicture}(18,12)
+\psset{unit=0.5cm,linewidth=0.2}
+\psline[linecolor=blue](0,0)(10,10)
+\psline[linecolor=blue](4,0)(2,2)
+\psline[linecolor=blue](8,0)(4,4)
+\psline[linecolor=blue](12,0)(14,2)
+\psline[linecolor=blue](16,0)(8,8)
+\psline[linecolor=red](1,0)(11,10)
+\psline[linecolor=red,arrows=-o](17,0)(9,8)
+\psline[linecolor=red,arrows=-o](13,0)(15,2)
+\psline[linecolor=red](7,3)(14,3)
+\psline[linecolor=red,arrows=<-](10,3)(14,3)
+\psline[linecolor=red](10,0)(7,3)
+\psline[linecolor=red,arrows=-o](9,0)(5,4)
+\psline[linecolor=red,arrows=-o](4,1)(3,2)
+\rput{135}(4,1){\LARGE\textcolor{red}{\textsf{\textbf{x}}}}
+\psline[linecolor=red](18,0)(17,1)
+\psline[linecolor=red,arrows=*-](16,1)(17,1)
+\end{pspicture}
+}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\doublespacing
+
+\section*{Abstract}
+
+Symbiotic interactions are a fundamental aspect of life and understanding how these relationships coevolve remains an important goal in biology. Phylogenetic trees show the ancestral relationships between a group of organisms and can be used to learn about evolutionary processes. After constructing a phylogeny for a host and symbiont organism from molecular sequences, we can create a map of ancestral symbionts to ancestral hosts called a reconciliation. The reconciliation often reveals discrepancies between the two trees which we can explain with the biological events duplication, host-switch, and loss. Current approaches to this problem apply a penalizing score to each event and optimize the reconciliation between the two trees to reduce these events. I instead assign each event a rate and develop an algorithm to calculate the probability of a symbiont tree given a host tree, a reconciliation, and the event rates and implement it in a Bayesian MCMC framework where all parameters are simultaneously estimated or integrated out. I test my algorithm on data simulated under the same coevolutionary model and find good, but not perfect, reconstruction of coevolutionary histories, as well as a flaw in the operator. Finally, I discuss potential extensions for my model, particularly to coevolutionary theory.
+
+\end{document}
